@@ -1,11 +1,21 @@
-# Test your FastAPI endpoints
+# Yog Sudhar Project
+
+### Welcome
 
 GET http://127.0.0.1:8000/
 Accept: application/json
 
-###
+### Check if Yoga Posture is Correct for 1 Repetition
 
-GET http://127.0.0.1:8000/hello/User
+POST http://127.0.0.1:8000/predictions/is-pose-correct
 Accept: application/json
+Content-Type: application/json
+
+{
+  "data": [ // for every 1 repetition
+    [x0,y0,z0,visibility0,x1,y1,z1,visibility1,..., x32,y32,z32,visibility32] // frame 1
+    [x0,y0,z0,visibility0,x1,y1,z1,visibility1,..., x32,y32,z32,visibility32] // frame 2
+  ]
+}
 
 ###
