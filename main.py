@@ -52,7 +52,7 @@ async def root():
     return {"message": "Welcome to Yog Sudhar. We hope you enjoy!"}
 
 
-@app.post("/predictions/is-pose-correct/")
+@app.post("/predictions/is-pose-correct/", status_code=200)
 async def predict_is_pose_correct(data: PoseFrames):
     try:
         # Check if pose is correct for each frame
