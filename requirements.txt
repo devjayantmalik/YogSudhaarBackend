@@ -2,3 +2,6 @@ statsmodels==0.14.4
 scikit-learn==1.6.1
 xgboost==3.0.0
 catboost==1.2.7
+uvicorn==0.34.0
+fastapi==0.115.11
+torch==2.6.0
