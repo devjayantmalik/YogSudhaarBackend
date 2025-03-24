@@ -4,9 +4,12 @@ from typing import Any
 import numpy as np
 import pandas
 
-import normalize
-import params
-import pre_processing
+from . import normalize, params, pre_processing
+
+
+# import normalize
+# from . import params
+# import pre_processing
 
 
 # Always ensure that you have "model.pkl in Train_model folder". If not then first run geenerate_model.py in Train_model.
