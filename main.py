@@ -1,7 +1,7 @@
 import os
 from typing import Tuple
 
-import pandas
+import pandas as pd
 import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel, conlist
@@ -33,10 +33,15 @@ class PoseFrames(BaseModel):
     """
     frames: conlist(PoseData, min_length=1, max_length=500)
 
-    def to_pandas_df(self) -> pandas.DataFrame:
-        # Implement this
-        raise Exception("Not Implemented")
-        # return pandas.DataFrame(self.frames)
+    def to_pandas_df(self) -> pd.DataFrame:
+        rows = []
+        for frame in self.frames:
+            row = []
+            for pose in frame.poses:
+                row.extend(pose)
+            rows.append(row)
+
+        return pd.DataFrame(rows)
 
 
 app = FastAPI()
