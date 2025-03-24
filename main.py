@@ -54,11 +54,16 @@ async def root():
 
 @app.post("/predictions/is-pose-correct/")
 async def predict_is_pose_correct(data: PoseFrames):
-    # Check if pose is correct for each frame
-    is_correct = is_pose_correct(models, scaler, data.to_pandas_df())
+    try:
+        # Check if pose is correct for each frame
+        is_correct = is_pose_correct(models, scaler, data.to_pandas_df())
 
-    return {"is_pose_correct": is_correct,
-            "message": "You are doing it correct." if is_correct else "You are doing it incorrect."}
+        return {"is_pose_correct": is_correct,
+                "message": "You are doing it correct." if is_correct else "You are doing it incorrect."}
+    except Exception as ex:
+        print(ex)
+        return {"is_pose_correct": False,
+                "message": "Failed to predict poses."}
 
 
 if __name__ == "__main__":
