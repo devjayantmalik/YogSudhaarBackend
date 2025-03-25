@@ -1,4 +1,6 @@
+import json
 import os
+import time
 
 import pandas as pd
 import uvicorn
@@ -56,15 +58,32 @@ async def root():
 async def predict_is_pose_correct(data: PoseFrames):
     try:
         # Check if pose is correct for each frame
-        is_correct = is_pose_correct(models, scaler, data.to_pandas_df())
+        print(f"Predicting for data: {json.dumps(data)}")
+        df = data.to_pandas_df()
+        basename = f"requests/{time.strftime('%m-%d-%Y--%H-%M-%S')}"
 
-        return {"is_pose_correct": is_correct,
-                "message": "You are doing it correct." if is_correct else "You are doing it incorrect."}
+        # enable for logging and debugging
+        df.to_csv(basename + ".request.csv")
+
+        # get prediction
+        is_correct = is_pose_correct(models, scaler, df)
+        response = {"is_pose_correct": is_correct,
+                    "message": "You are doing it correct." if is_correct else "You are doing it incorrect."}
+
+        # save for logging and debugging
+        with open(basename + ".success.txt", "w") as file:
+            file.write(json.dumps(response))
+
+        return response
     except Exception as ex:
-        print(ex)
+        # save for logging and debugging
+        with open(basename + ".exception.txt", "w") as file:
+            file.write(str(ex))
+
         return {"is_pose_correct": False,
                 "message": "Failed to predict poses."}
 
 
 if __name__ == "__main__":
+    os.makedirs("requests", exist_ok=True) # for logging.
     uvicorn.run(app, host="0.0.0.0", port=8009, root_path="/yog-sudhar")
