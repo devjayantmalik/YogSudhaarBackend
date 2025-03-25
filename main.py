@@ -56,11 +56,11 @@ async def root():
 
 @app.post("/predictions/is-pose-correct", status_code=200)
 async def predict_is_pose_correct(data: PoseFrames):
+    basename = f"requests/{time.strftime('%m-%d-%Y--%H-%M-%S')}"
     try:
         # Check if pose is correct for each frame
         print(f"Predicting for data: {json.dumps(data)}")
         df = data.to_pandas_df()
-        basename = f"requests/{time.strftime('%m-%d-%Y--%H-%M-%S')}"
 
         # enable for logging and debugging
         df.to_csv(basename + ".request.csv")
