@@ -1,5 +1,4 @@
 import os
-from typing import Tuple
 
 import pandas as pd
 import uvicorn
@@ -19,7 +18,7 @@ scaler = load_models(scaler_path, 1)
 
 class PoseData(BaseModel):
     # Each pose will be tuple of (x, y, z, visibility)
-    poses: conlist(Tuple[float, float, float, float], min_length=32, max_length=32)
+    poses: list[conlist(float, min_length=133, max_length=133)]
 
 
 class PoseFrames(BaseModel):
@@ -34,14 +33,15 @@ class PoseFrames(BaseModel):
     frames: conlist(PoseData, min_length=1, max_length=500)
 
     def to_pandas_df(self) -> pd.DataFrame:
-        rows = []
-        for frame in self.frames:
-            row = []
-            for pose in frame.poses:
-                row.extend(pose)
-            rows.append(row)
+        columns = ["frame"]
+        for i in range(33):
+            columns.append(f"x_{i}")
+            columns.append(f"y_{i}")
+            columns.append(f"z_{i}")
+            columns.append(f"visibility_{i}")
 
-        return pd.DataFrame(rows)
+        rows = [pose for frame in self.frames for pose in frame.poses]
+        return pd.DataFrame(rows, columns=columns)
 
 
 app = FastAPI()
