@@ -25,7 +25,7 @@ class PoseFrames(BaseModel):
     """
     Example Input:
     { "frames": [
-        { "poses" [ [x,y,z,visibility], [x,y,z,visibility ], ...(must be 32 items exact) },
+        { "poses" [ frame, x_0, y_0, z_0, visibility_0, x_1, y_1, z_1, visibility_1 , ...(must be 133 items exact) ] },
         { "poses" [] },
         ...
     ]}
@@ -67,4 +67,4 @@ async def predict_is_pose_correct(data: PoseFrames):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8009)
+    uvicorn.run(app, host="0.0.0.0", port=8009, root_path="/yog-sudhar")
