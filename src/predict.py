@@ -59,7 +59,7 @@ def is_pose_correct(models: Any, scaler: Any, data: pandas.DataFrame) -> bool:
         counter[model_predictions] += 1
 
     prediction = target_nm[np.argmax(counter)]
-    return prediction == "cor"
+    return prediction == "cor" if (prediction == "cor") else prediction
 
 # if __name__ == "__main__":
 #     current_dir = os.path.dirname(os.path.abspath(__file__))

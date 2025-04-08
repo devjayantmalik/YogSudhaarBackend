@@ -66,9 +66,10 @@ async def predict_is_pose_correct(data: PoseFrames):
 
         # get prediction
         is_correct = is_pose_correct(models, scaler, df)
-        response = {"is_pose_correct": is_correct,
-                    "message": "You are doing it correct." if is_correct else "You are doing it incorrect."}
-
+        if is_correct is True:
+            response = {"is_pose_correct": is_correct, "message": "You are doing it correct."}
+        else:
+            response = {"is_pose_correct": False, "message": f"You are doing {is_correct} incorrect."}
         # save for logging and debugging
         with open(basename + ".success.txt", "w") as file:
             file.write(json.dumps(response))
@@ -84,5 +85,5 @@ async def predict_is_pose_correct(data: PoseFrames):
 
 
 if __name__ == "__main__":
-    os.makedirs("requests", exist_ok=True) # for logging.
+    os.makedirs("requests", exist_ok=True)  # for logging.
     uvicorn.run(app, host="0.0.0.0", port=8009, root_path="/yog-sudhar")
