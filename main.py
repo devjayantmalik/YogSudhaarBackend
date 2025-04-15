@@ -59,6 +59,8 @@ async def predict_is_pose_correct(data: PoseFrames):
     basename = f"requests/{time.strftime('%m-%d-%Y--%H-%M-%S')}"
     try:
         # Check if pose is correct for each frame
+        # df = pd.read_csv("data/04-01-2025--14-19-36.request.csv")
+        # df = pd.read_csv("data/correct.csv")
         df = data.to_pandas_df()
 
         # enable for logging and debugging

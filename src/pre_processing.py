@@ -72,21 +72,21 @@ def plot_stick(df):
 
 
 def py_ang(point_a, point_b):
-    if len(np.ravel(point_a)) == 2:
-        x = point_a[0]
-        y = point_a[1]
-    else:
-        x = [row[0] for row in point_a]
-        y = [row[1] for row in point_a]
+    # if len(np.ravel(point_a)) == 2:
+    #     x = point_a[0]
+    #     y = point_a[1]
+    # else:
+    x = [row[0] for row in point_a]
+    y = [row[1] for row in point_a]
 
     ang_a = np.arctan2(y, x)
 
-    if len(np.ravel(point_b)) == 2:
-        x = point_b[0]
-        y = point_b[1]
-    else:
-        x = [row[0] for row in point_b]
-        y = [row[1] for row in point_b]
+    # if len(np.ravel(point_b)) == 2:
+    #     x = point_b[0]
+    #     y = point_b[1]
+    # else:
+    x = [row[0] for row in point_b]
+    y = [row[1] for row in point_b]
 
     ang_b = np.arctan2(y, x)
     return np.rad2deg((ang_a - ang_b) % (2 * np.pi))
@@ -167,7 +167,7 @@ def calc(df, angle):
 def single_processor(data):
     X_test = []
     x_range_hka = np.linspace(0, 360, num=73)
-    df_test = data.iloc[10:, :]
+    df_test = data.iloc[:, :]
     index_list = [-1] * len(plot_list)
     for id, angle in enumerate(plot_list):
         angle_vals = calc(df_test, angle)
