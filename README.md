@@ -2,6 +2,10 @@
 
 FastAPI backend to correct body postures during yog exercises.
 
+## Requirements
+
+- Python: 3.12
+
 ## Get started
 
 1. Create a venv
